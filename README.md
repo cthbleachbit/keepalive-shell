@@ -12,3 +12,5 @@ Server status service with bash
 * `systemd/keeplive-client.service`
 
 * `systemd/keeplive-client.timer`
+
+* `conf/keepalive-client.conf`
