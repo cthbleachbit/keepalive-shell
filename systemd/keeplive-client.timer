@@ -1,0 +1,10 @@
+[Unit]
+Description=Send keepalive info
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=12m
+AccuracySec=1h
+
+[Install]
+WantedBy=timers.target

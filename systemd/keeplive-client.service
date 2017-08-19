@@ -1,0 +1,12 @@
+[Unit]
+Description=Send keepalive info
+After=network.target
+
+[Service]
+User=serv
+WorkingDirectory=/home/serv/.keepalive
+Type=oneshot
+ExecStart=/usr/local/bin/keepalive-client.sh
+
+[Install]
+WantedBy=multi-user.target
