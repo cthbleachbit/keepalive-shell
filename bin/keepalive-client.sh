@@ -4,7 +4,7 @@
 [ -f /etc/keepalive-client.conf ] && source /etc/keepalive-client.conf
 
 RESULT=""
-FILENAME="${CLIENT_MACHINE_NAME}:$(date +%s)"
+FILENAME="$(date +%s)"
 
 add_key_value_pair(){
 	RESULT+="$1=\"$2\"\n"
@@ -31,7 +31,10 @@ done
 
 echo -e "${RESULT}" > /tmp/keepalive.tmp
 
+((${DRY_RUN})) || ssh ${SERVER_USER}@${SERVER_ADDRESS} \
+                      -p ${SERVER_SSH_PORT} \
+                      mkdir -p /home/${SERVER_USER}/keepalive/${CLIENT_MACHINE_NAME}/
 ((${DRY_RUN})) || scp -P ${SERVER_SSH_PORT} \
-    -i ${SERVER_USER_KEY} \
-    /tmp/keepalive.tmp \
-    ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${FILENAME}
+                      -i ${SERVER_USER_KEY} \
+                      /tmp/keepalive.tmp \
+                      ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${CLIENT_MACHINE_NAME}/${FILENAME}
