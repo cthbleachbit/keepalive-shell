@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Loads in configuration variables
-[-f /etc/keepalive-client.conf] && source /etc/keepalive-client.conf
+[ -f /etc/keepalive-client.conf ] && source /etc/keepalive-client.conf
 
 RESULT=""
 FILENAME="${CLIENT_MACHINE_NAME}:$(date +%s)"
@@ -29,9 +29,9 @@ for SVC in ${MONITOR_SYSTEMD_SVC}; do
 	fi
 done
 
-echo -e "${RESULT}" >> /tmp/keepalive.tmp
+echo -e "${RESULT}" > /tmp/keepalive.tmp
 
 ((${DRY_RUN})) || scp -P ${SERVER_SSH_PORT} \
     -i ${SERVER_USER_KEY} \
     /tmp/keepalive.tmp \
-    ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/$(FILENAME)
+    ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${FILENAME}
