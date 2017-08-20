@@ -17,6 +17,7 @@ add_directive() {
 send_info() {
 	ssh ${SERVER_USER}@${SERVER_ADDRESS} \
 	    -p ${SERVER_SSH_PORT} \
+	    -i ${SERVER_USER_KEY} \
 	    mkdir -p /home/${SERVER_USER}/keepalive/${CLIENT_HOSTNAME}/
 	scp -P ${SERVER_SSH_PORT} \
 	    -i ${SERVER_USER_KEY} \
