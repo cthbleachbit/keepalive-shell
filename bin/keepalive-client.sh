@@ -24,7 +24,16 @@ send_info() {
 	    ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${CLIENT_HOSTNAME}/${FILENAME}
 }
 
+# Put common name
 add_key_value_pair "MACHINE_NAME" "${CLIENT_MACHINE_NAME}"
+
+# Check CPU and memory usage
+CPU_USAGE=$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4-u1) * 100 / (t-t1) "%"; }' <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat))
+MEM_USAGE=$(free -h | grep 'Mem:')
+MEM_ACTIVE=$(echo $MEM_USAGE | awk '{print $3}')
+MEM_TOTAL=$(echo $MEM_USAGE | awk '{print $2}')
+add_key_value_pair "MEM_ACTIVE" "$MEM_ACTIVE"
+add_key_value_pair "MEM_TOTAL" "$MEM_TOTAL"
 
 # Check loadavg
 add_key_value_pair "LOADAVG" "$(cat /proc/loadavg)"
