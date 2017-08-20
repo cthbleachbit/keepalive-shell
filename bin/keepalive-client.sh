@@ -6,13 +6,25 @@
 RESULT=""
 FILENAME="$(date +%s)"
 
-add_key_value_pair(){
+add_key_value_pair() {
 	RESULT+="$1=\"$2\"\n"
 }
 
-add_directive(){
+add_directive() {
 	RESULT+="$1\n"
 }
+
+send_info() {
+	ssh ${SERVER_USER}@${SERVER_ADDRESS} \
+	    -p ${SERVER_SSH_PORT} \
+	    mkdir -p /home/${SERVER_USER}/keepalive/${CLIENT_HOSTNAME}/
+	scp -P ${SERVER_SSH_PORT} \
+	    -i ${SERVER_USER_KEY} \
+	    /tmp/keepalive.tmp \
+	    ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${CLIENT_HOSTNAME}/${FILENAME}
+}
+
+add_key_value_pair "MACHINE_NAME" "${CLIENT_MACHINE_NAME}"
 
 # Check loadavg
 add_key_value_pair "LOADAVG" "$(cat /proc/loadavg)"
@@ -31,10 +43,4 @@ done
 
 echo -e "${RESULT}" > /tmp/keepalive.tmp
 
-((${DRY_RUN})) || ssh ${SERVER_USER}@${SERVER_ADDRESS} \
-                      -p ${SERVER_SSH_PORT} \
-                      mkdir -p /home/${SERVER_USER}/keepalive/${CLIENT_MACHINE_NAME}/
-((${DRY_RUN})) || scp -P ${SERVER_SSH_PORT} \
-                      -i ${SERVER_USER_KEY} \
-                      /tmp/keepalive.tmp \
-                      ${SERVER_USER}@${SERVER_ADDRESS}:/home/${SERVER_USER}/keepalive/${CLIENT_MACHINE_NAME}/${FILENAME}
+((${DRY_RUN})) || send_info
