@@ -55,6 +55,7 @@ assemble_single_client() {
 	add_title "$1"
 	add_subtitle "Machine Name"
 	add_bullet "${MACHINE_NAME}"
+	add_bullet "Reported on $(date --date=\'@${2}\')"
 	RET+="\n"
 	add_subtitle "CPU and memory"
 	add_bullet "Load: ${LOADAVG}"
