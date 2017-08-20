@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=serv
-WorkingDirectory=/home/serv/.keepalive
+WorkingDirectory=/home/serv/
 Type=oneshot
 ExecStart=/usr/local/bin/keepalive-client.sh
 
