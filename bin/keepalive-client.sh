@@ -32,6 +32,7 @@ CPU_USAGE=$(awk '{u=$2+$4; t=$2+$4+$5; if (NR==1){u1=u; t1=t;} else print ($2+$4
 MEM_USAGE=$(free -h | grep 'Mem:')
 MEM_ACTIVE=$(echo $MEM_USAGE | awk '{print $3}')
 MEM_TOTAL=$(echo $MEM_USAGE | awk '{print $2}')
+add_key_value_pair "CPU_USAGE" "$CPU_USAGE"
 add_key_value_pair "MEM_ACTIVE" "$MEM_ACTIVE"
 add_key_value_pair "MEM_TOTAL" "$MEM_TOTAL"
 
