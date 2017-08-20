@@ -40,12 +40,12 @@ final_transmit() {
 }
 
 list_clients() {
-	ls ${HOME}/keepalive/
+	ls ${HOME}/keepalive/ -1
 }
 
 # $1 = hostname
-list_client_timestamp() {
-	ls ${HOME}/keepalive/${1}
+list_client_timestamps() {
+	ls ${HOME}/keepalive/${1} -1 | sort -r
 }
 
 # $1 = client_hostname
@@ -62,3 +62,11 @@ assemble_single_client() {
 	add_bullet "Active memory: ${MEM_ACTIVE}"
 	add_bullet "Total memory: ${MEM_TOTAL}"
 }
+
+for CLIENT in $(list_clients); do
+	LIST=$(list_client_timestamps ${CLIENT})
+	TIMESTAMPS=($LIST)
+	assemble_single_client ${CLIENT} ${TIMESTAMPS[0]}
+done
+
+final_transmit
