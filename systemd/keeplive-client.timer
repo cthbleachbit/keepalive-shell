@@ -2,8 +2,7 @@
 Description=Send keepalive info
 
 [Timer]
-OnCalendar=daily
-RandomizedDelaySec=12m
+OnCalendar=hourly
 AccuracySec=1h
 
 [Install]
