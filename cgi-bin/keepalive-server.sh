@@ -63,6 +63,10 @@ assemble_single_client() {
 	add_bullet "CPU: ${CPU_USAGE}"
 	add_bullet "Active memory: ${MEM_ACTIVE}"
 	add_bullet "Total memory: ${MEM_TOTAL}"
+	(( ${#SYSTEMD[@]} )) && add_subtitle "Systemd services"
+	(( ${#SYSTEMD[@]} )) || for SVC in "${!SYSTEMD[@]}"; do
+		add_bullet "$SVC: ${SYSTEMD[${SVC}]}"
+	done
 }
 
 for CLIENT in $(list_clients); do
