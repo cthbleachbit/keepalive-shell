@@ -3,6 +3,7 @@
 #[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || exit 1
 
 RET=""
+HOME=~
 
 # $1 = charac
 add_horizon_line() {
@@ -34,9 +35,9 @@ final_transmit() {
 	echo ""
 	echo "<html><head>"
 	echo "<link rel=\"stylesheet\" href=\"/static/tui.css\">"
-	echo "</head><body>"
+	echo "</head><body><pre>"
 	echo -e "$RET"
-	echo "</body></html>"
+	echo "</pre></body></html>"
 }
 
 list_clients() {
@@ -55,7 +56,7 @@ assemble_single_client() {
 	add_title "$1"
 	add_subtitle "Machine Name"
 	add_bullet "${MACHINE_NAME}"
-	add_bullet "Reported on $(date --date=\'@${2}\')"
+	add_bullet "$(date --date=@${2})"
 	RET+="\n"
 	add_subtitle "CPU and memory"
 	add_bullet "Load: ${LOADAVG}"
