@@ -7,7 +7,7 @@ HOME=~
 
 # $1 = charac
 add_horizon_line() {
-	for i in {1..40}; do RET+="$1"; done
+	for i in {1..64}; do RET+="$1"; done
 	RET+="\n"
 }
 
@@ -63,8 +63,9 @@ assemble_single_client() {
 	add_bullet "CPU: ${CPU_USAGE}"
 	add_bullet "Active memory: ${MEM_ACTIVE}"
 	add_bullet "Total memory: ${MEM_TOTAL}"
+	RET+="\n"
 	(( ${#SYSTEMD[@]} )) && add_subtitle "Systemd services"
-	(( ${#SYSTEMD[@]} )) || for SVC in "${!SYSTEMD[@]}"; do
+	(( ${#SYSTEMD[@]} )) && for SVC in "${!SYSTEMD[@]}"; do
 		add_bullet "$SVC: ${SYSTEMD[${SVC}]}"
 	done
 }
