@@ -68,6 +68,8 @@ assemble_single_client() {
 	(( ${#SYSTEMD[@]} )) && for SVC in "${!SYSTEMD[@]}"; do
 		add_bullet "$SVC: ${SYSTEMD[${SVC}]}"
 	done
+	RET+="\n"
+	RET+="\n"
 	# clean up the array
 	unset SYSTEMD
 }
