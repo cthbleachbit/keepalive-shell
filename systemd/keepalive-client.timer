@@ -2,8 +2,8 @@
 Description=Send keepalive info
 
 [Timer]
-OnCalendar=hourly
-AccuracySec=1h
+OnCalendar=*:0,15,30,45
+AccuracySec=1m
 
 [Install]
 WantedBy=timers.target
