@@ -35,6 +35,7 @@ final_transmit() {
 	echo ""
 	echo "<html><head>"
 	echo "<link rel=\"stylesheet\" href=\"/static/tui.css\">"
+	echo "<title>Status</title>"
 	echo "</head><body><pre>"
 	echo -e "$RET"
 	echo "</pre></body></html>"
