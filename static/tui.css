@@ -1,3 +1,15 @@
 body {
 	font-family: "Courier New", "Consolas", monospace;
 }
+
+.upd2h {
+	color: red;
+}
+
+.upd1h {
+	color: yellow;
+}
+
+.updnow {
+	color: green;
+}
