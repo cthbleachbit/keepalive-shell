@@ -2,14 +2,18 @@ body {
 	font-family: "Courier New", "Consolas", monospace;
 }
 
-.upd2h {
-	color: red;
+.upd2h{
+	background-color: red;
+	color: white;
+	font-weight: bold;
 }
 
-.upd1h {
-	color: yellow;
+.upd1h{
+	background-color: yellow;
+	font-weight: bold;
 }
 
-.updnow {
-	color: green;
+.upd30m {
+	background-color: green;
+	font-weight: bold;
 }
