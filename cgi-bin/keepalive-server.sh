@@ -1,41 +1,44 @@
 #!/bin/bash
 
-[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || exit 1
-ACCESS_GRANTED=1
-if (($ENABLE_TOTP)); then
-	ACCESS_GRANTED=0
-	source /usr/local/lib/totp-cth-cli/alg.lib.sh
-	source /usr/local/lib/totp-cth-cli/uri.lib.sh
-	source /usr/local/lib/totp-cth-cli/base32decoder.lib.sh
-fi
-
-RET=""
-HTML_LINEFEED=""
+# environment
 HOME=~
+
+fail() {
+	RET="$@"
+	final_transmit
+	exit 0
+}
+
+lf() {
+	RET+="<br>\n"
+}
 
 # $1 = charac
 add_horizon_line() {
 	for i in {1..64}; do RET+="$1"; done
-	RET+="<br>\n"
+	lf
 }
 
 # $1 = title text
 add_title() {
-	RET+="$1\n"
+	RET+="$1"
+	lf
 	add_horizon_line "="
-	RET+="<br>\n"
+	lf
 }
 
 # $1 = title text
 add_subtitle() {
-	RET+="$1\n"
+	RET+="$1"
+	lf
 	add_horizon_line "-"
-	RET+="<br>\n"
+	lf
 }
 
 # $1 = title text
 add_bullet() {
-	RET+="* ${1}\n"
+	RET+="* ${1}"
+	lf
 }
 
 final_transmit() {
@@ -66,22 +69,33 @@ assemble_single_client() {
 	add_subtitle "Machine Name"
 	add_bullet "${MACHINE_NAME}"
 	add_bullet "$(date --date=@${2})"
-	RET+="<br>\n"
+	lf
 	add_subtitle "CPU and memory"
 	add_bullet "Load: ${LOADAVG}"
 	add_bullet "CPU: ${CPU_USAGE}"
 	add_bullet "Active memory: ${MEM_ACTIVE}"
 	add_bullet "Total memory: ${MEM_TOTAL}"
-	RET+="<br>\n"
+	lf
 	(( ${#SYSTEMD[@]} )) && add_subtitle "Systemd services"
 	(( ${#SYSTEMD[@]} )) && for SVC in "${!SYSTEMD[@]}"; do
 		add_bullet "$SVC: ${SYSTEMD[${SVC}]}"
 	done
-	RET+="<br>\n"
-	RET+="<br>\n"
+	lf
 	# clean up the array
 	unset SYSTEMD
 }
+
+[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || fail "Config not found"
+ACCESS_GRANTED=1
+if (($ENABLE_TOTP)); then
+	ACCESS_GRANTED=0
+	source /usr/local/lib/totp-cth-cli/alg.lib.sh
+	source /usr/local/lib/totp-cth-cli/uri.lib.sh
+	source /usr/local/lib/totp-cth-cli/base32decoder.lib.sh
+fi
+
+# string storage
+RET=""
 
 if (($TOTP_ENABLED)); then
 	USER=`echo "$QUERY_STRING" | sed -n 's/^.*username=\([^&]*\).*$/\1/p' | sed "s/%20/ /g"`
