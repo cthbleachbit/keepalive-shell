@@ -9,6 +9,25 @@ fail() {
 	exit 0
 }
 
+# time markers
+# $1 = unix epoch
+assemble_time_tag() {
+	RET_INNER=""
+	time_text="$(date --date=@${1})"
+	time_now_unix="$(date +%s)"
+	time_diff_unix=$(($time_now_unix - $1))
+	if [ $time_diff_unix -lt 1800 ]; then
+		RET_INNER+="<span class=\"upd30m\">"
+	elif [ $time_diff_unix -lt 3600 ]; then
+		RET_INNER+="<span class=\"upd1h\">"
+	else
+		RET_INNER+="<span class=\"updfail\">"
+	fi
+	RET_INNER+="${time_text}</span>"
+	echo "${RET_INNER}"
+}
+
+# add an html linefeed
 lf() {
 	RET+="<br>\n"
 }
@@ -68,7 +87,7 @@ assemble_single_client() {
 	add_title "$1"
 	add_subtitle "Machine Name"
 	add_bullet "${MACHINE_NAME}"
-	add_bullet "$(date --date=@${2})"
+	add_bullet "$(assemble_time_tag ${2})"
 	lf
 	add_subtitle "CPU and memory"
 	add_bullet "Load: ${LOADAVG}"
