@@ -1,0 +1,57 @@
+#!/bin/bash
+
+BLK_FULL='█'
+BLK_HALF='▄'
+BLK_NONE=' '
+
+(( $GRAPH_WIDTH )) || GRAPH_WIDTH=80;
+(( $GRAPH_HEIGHT )) || GRAPH_HEIGHT=10;
+(( $DATA_LO )) || DATA_LO=0;
+(( $DATA_HI )) || DATA_HI=100;
+[[ $LF ]] || LF="<br>\n"
+
+# actuall data formation
+# $@ = all input
+# do not add quotation marks
+formulate_data() {
+	if [[ $# -lt $GRAPH_WIDTH ]]; then
+		# not enough data
+		for i in $(seq 2 $(($GRAPH_WIDTH - $#))); do
+			DATA="$DATA 0"
+		done
+		DATA="$DATA $@"
+	else
+		# Using last GRAPH_WIDTH
+		DATA=""
+		for i in $(seq $(($# - $GRAPH_WIDTH + 1)) $#); do
+			DATA="$DATA ${!i}"
+		done
+	fi
+
+	echo -n "$DATA"
+}
+
+# $1
+draw_graph() {
+	# return value default to none
+	RET=""
+	INTERVAL=$(( ($DATA_HI - $DATA_LO) / $GRAPH_HEIGHT ))
+	for i in $(seq 1 $GRAPH_HEIGHT); do
+		# per line routine
+		BOUND_LO=$(( $DATA_HI - $INTERVAL * i ))
+		BOUND_HI=$(( $BOUND_HI + $INTERVAL ))
+		THRES_LO=$(( $BOUND_LO + $INTERVAL / 4 ))
+		THRES_HI=$(( $BOUND_LO + $INTERVAL * 3 / 4 ))
+		for i in "$@"; do
+			if [ $i -lt $BOUND_LO ]; then
+				RET="$RET$BLK_NONE"
+			elif [ $i -lt $THRES_LO ]; then
+				RET="$RET$BLK_HALF"
+			else
+				RET="$RET$BLK_FULL"
+			fi
+		done
+		RET="$RET$LF"
+	done
+	echo -en "$RET"
+}
