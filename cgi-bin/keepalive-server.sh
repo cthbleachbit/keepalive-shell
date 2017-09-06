@@ -2,6 +2,11 @@
 
 # environment
 HOME=~
+WIDTH=64
+
+[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || fail "Config not found"
+GRAPH_WIDTH=${WIDTH}
+source /usr/local/lib/keepalive/graph-sh
 
 fail() {
 	RET="$@"
@@ -34,7 +39,7 @@ lf() {
 
 # $1 = charac
 add_horizon_line() {
-	for i in {1..64}; do RET+="$1"; done
+	for i in {1..$WIDTH}; do RET+="$1"; done
 	lf
 }
 
@@ -83,6 +88,7 @@ list_client_timestamps() {
 # $1 = client_hostname
 # $2 = timpstamp
 assemble_single_client() {
+	GRAPH_CPU="$(draw_cpu_usage $1)"
 	source ${HOME}/keepalive/${1}/${2}
 	add_title "$1"
 	add_subtitle "Machine Name"
@@ -104,7 +110,18 @@ assemble_single_client() {
 	unset SYSTEMD
 }
 
-[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || fail "Config not found"
+# $1 = client_hostname
+draw_cpu_usage() {
+	TIME_LIST="$(list_client_timestamps ${1} | tail -${WIDTH})"
+	CPU_LIST=""
+	for TIME in ${TIME_LIST}; do
+		source ${HOME}/keepalive/${1}/${TIME}
+		CPU_LIST="$CPU_LIST ${CPU_USAGE}"
+	done
+	CPU_LIST=$(echo $CPU_LIST | sed -e 's/\.[0-9]\+//g')
+	draw_graph ${CPU_LIST//%/}
+}
+
 ACCESS_GRANTED=1
 if (($ENABLE_TOTP)); then
 	ACCESS_GRANTED=0
