@@ -4,15 +4,15 @@
 HOME=~
 WIDTH=64
 
-[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || fail "Config not found"
-GRAPH_WIDTH=${WIDTH}
-source /usr/local/lib/keepalive/graph-sh
-
 fail() {
 	RET="$@"
 	final_transmit
 	exit 0
 }
+
+[ -f /etc/keepalive-server.conf ] && source /etc/keepalive-server.conf || fail "Config not found"
+GRAPH_WIDTH=${WIDTH}
+source /usr/local/lib/keepalive/graph-sh
 
 # time markers
 # $1 = unix epoch
