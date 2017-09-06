@@ -39,7 +39,7 @@ lf() {
 
 # $1 = charac
 add_horizon_line() {
-	for i in {1..$WIDTH}; do RET+="$1"; done
+	for i in $(seq 1 $WIDTH); do RET+="$1"; done
 	lf
 }
 
@@ -98,6 +98,11 @@ assemble_single_client() {
 	add_subtitle "CPU and memory"
 	add_bullet "Load: ${LOADAVG}"
 	add_bullet "CPU: ${CPU_USAGE}"
+
+	add_horizon_line "+"
+	RET+="$GRAPH_CPU"
+	add_horizon_line "+"
+
 	add_bullet "Active memory: ${MEM_ACTIVE}"
 	add_bullet "Total memory: ${MEM_TOTAL}"
 	lf
