@@ -4,8 +4,7 @@
 HOME=~
 
 fail() {
-	RET="$@"
-	final_transmit
+	echo "$@"
 	exit 0
 }
 
