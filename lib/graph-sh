@@ -8,7 +8,7 @@ BLK_NONE=' '
 (( $GRAPH_HEIGHT )) || GRAPH_HEIGHT=10;
 (( $DATA_LO )) || DATA_LO=0;
 (( $DATA_HI )) || DATA_HI=100;
-[[ $LF ]] || LF="<br>\n"
+[[ $LF ]] || LF="\n"
 
 # actuall data formation
 # $@ = all input

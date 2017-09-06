@@ -34,7 +34,7 @@ assemble_time_tag() {
 
 # add an html linefeed
 lf() {
-	RET+="<br>\n"
+	RET+="\n"
 }
 
 # $1 = charac
@@ -71,9 +71,9 @@ final_transmit() {
 	echo "<html><head>"
 	echo "<link rel=\"stylesheet\" href=\"/static/tui.css\">"
 	echo "<title>Status</title>"
-	echo "</head><body>"
+	echo "</head><body><p class=\"status\">"
 	echo -e "$RET"
-	echo "</body></html>"
+	echo "<\p></body></html>"
 }
 
 list_clients() {
