@@ -75,7 +75,7 @@ final_transmit() {
 	echo "<title>Status</title>"
 	echo "</head><body><p class=\"status\">"
 	echo -e "$RET"
-	echo "<\p></body></html>"
+	echo "</p></body></html>"
 }
 
 list_clients() {

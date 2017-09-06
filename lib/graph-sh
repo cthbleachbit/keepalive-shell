@@ -1,8 +1,14 @@
 #!/bin/bash
 
-BLK_FULL='█'
-BLK_HALF='▄'
-BLK_NONE=' '
+if (($USE_BLOCKS)); then
+	BLK_FULL='█'
+	BLK_HALF='▄'
+else
+	BLK_FULL='#'
+	BLK_HALF='='
+fi
+
+(($SHOW_GRID)) && BLK_NONE='_' || BLK_NONE=' '
 
 (( $GRAPH_WIDTH )) || GRAPH_WIDTH=80;
 (( $GRAPH_HEIGHT )) || GRAPH_HEIGHT=10;
