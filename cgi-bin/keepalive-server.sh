@@ -100,7 +100,7 @@ assemble_single_client() {
 	add_bullet "CPU: ${CPU_USAGE}"
 
 	add_horizon_line "+"
-	RET+="$GRAPH_CPU"
+	RET+="$GRAPH_CPU\n"
 	add_horizon_line "+"
 
 	add_bullet "Active memory: ${MEM_ACTIVE}"
