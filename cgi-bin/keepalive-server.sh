@@ -118,7 +118,7 @@ assemble_single_client() {
 
 # $1 = client_hostname
 draw_cpu_usage() {
-	TIME_LIST="$(list_client_timestamps ${1} | tail -${WIDTH})"
+	TIME_LIST="$(ls ${HOME}/keepalive/${1} -1 | tail -${WIDTH})"
 	CPU_LIST=""
 	for TIME in ${TIME_LIST}; do
 		source ${HOME}/keepalive/${1}/${TIME}
