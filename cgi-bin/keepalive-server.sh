@@ -70,6 +70,7 @@ final_transmit() {
 	echo ""
 	echo "<html><head>"
 	echo "<link rel=\"stylesheet\" href=\"/static/tui.css\">"
+	echo "<link href=\"https://fonts.googleapis.com/css?family=Source+Code+Pro\" rel=\"stylesheet\">"
 	echo "<meta charset=utf-8>"
 	echo "<title>Status</title>"
 	echo "</head><body><p class=\"status\">"

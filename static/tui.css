@@ -1,6 +1,8 @@
 p.status {
-	font-family: "Courier New", "Consolas", monospace;
+	font-family: 'Source Code Pro', "Courier", "Courier New", monospace;
 	white-space: pre;
+	display: block;
+	margin: lem 0;
 }
 
 .updfail{
