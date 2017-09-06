@@ -1,5 +1,6 @@
 body {
 	font-family: "Courier New", "Consolas", monospace;
+	white-space: pre;
 }
 
 .updfail{
