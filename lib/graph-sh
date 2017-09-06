@@ -53,5 +53,5 @@ draw_graph() {
 		done
 		RET="$RET$LF"
 	done
-	echo -en "$RET"
+	echo -e "$RET"
 }
