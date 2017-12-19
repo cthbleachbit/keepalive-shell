@@ -21,3 +21,12 @@ p.status {
 	color: white;
 	font-weight: bold;
 }
+
+.kas-graph {
+	background-color: black;
+	color: white;
+}
+
+.kas-title .kas-subtitle {
+	font-weight: bold
+}

@@ -45,7 +45,7 @@ add_horizon_line() {
 
 # $1 = title text
 add_title() {
-	RET+="<div class=\"kas-title\">$1</div>"
+	RET+="<span class=\"kas-title\">$1</span>"
 	lf
 	add_horizon_line "="
 	lf
@@ -53,7 +53,7 @@ add_title() {
 
 # $1 = title text
 add_subtitle() {
-	RET+="<div class=\"kas-subtitle\">$1</div>"
+	RET+="<span class=\"kas-subtitle\">$1</span>"
 	lf
 	add_horizon_line "-"
 	lf
