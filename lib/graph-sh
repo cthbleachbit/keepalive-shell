@@ -40,7 +40,7 @@ formulate_data() {
 # $1
 draw_graph() {
 	# return value default to none
-	RET=""
+	RET="<div class=\"kas-graph\">"
 	INTERVAL=$(( ($DATA_HI - $DATA_LO) / $GRAPH_HEIGHT ))
 	for i in $(seq 1 $GRAPH_HEIGHT); do
 		# per line routine
@@ -57,7 +57,7 @@ draw_graph() {
 				RET="$RET$BLK_FULL"
 			fi
 		done
-		RET="$RET$LF"
+		RET="$RET$LF</div>"
 	done
 	echo -e "$RET"
 }
