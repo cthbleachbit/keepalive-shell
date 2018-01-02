@@ -57,7 +57,7 @@ draw_graph() {
 				RET="$RET$BLK_FULL"
 			fi
 		done
-		RET="$RET$LF</span>"
+		RET="$RET$LF"
 	done
-	echo -e "$RET"
+	echo -e "$RET</span>"
 }
